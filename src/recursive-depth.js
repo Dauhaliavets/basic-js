@@ -13,23 +13,19 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 class DepthCalculator {
-	
+	countCallRecursion = 0;
+	filteredArr = [];
+
 	calculateDepth(arr) {
-		let countCallRecursion = 0;
-		let filteredArr;
-
-		function recursion(arr) {
-			countCallRecursion++;
-			filteredArr = arr.filter((el) => Array.isArray(el));
-			if (filteredArr.length > 0) {
-				return recursion(arr.flat());
-			} else {
-				return countCallRecursion;
-			}
+		this.countCallRecursion++;
+		this.filteredArr = arr.filter((el) => Array.isArray(el));
+		if (this.filteredArr.length) {
+			return this.calculateDepth(this.filteredArr.flat());
+		} else {
+			let depth = this.countCallRecursion;
+			this.countCallRecursion = 0;
+			return depth;
 		}
-
-		let depth = recursion(arr);
-		return depth;
 	}
 }
 
