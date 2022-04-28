@@ -21,7 +21,7 @@ function getSeason(date) {
 	}
 
 	for (let key in date) {
-		if (!Object.getOwnPropertyNames(date).includes('getUTCFullYear')) {
+		if (!Object.getOwnPropertyNames(key).includes('getUTCFullYear')) {
 			throw new Error('Invalid date!');
 		}
 	}
